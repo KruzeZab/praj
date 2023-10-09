@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Student Marks Prediction</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container">
+        <a class="navbar-brand" href="/">Student Marks Prediction</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'index' %}"
+                >Home</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'about' %}"
+                >About</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'all-students' %}"
+                >Students</a
+              >
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'faq' %}"
+                >FAQs</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'all-teachers' %}"
+                >Teachers</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Marks Prediction</a>
+            </li>
+          </ul>
+    
+          <div class="ms-auto">
+            <a
+              href="{% url 'login' %}"
+              class="btn btn-primary btn-sm me-2"
+              >Login</a
+            >
+            <a href="{% url 'signup' %}" class="btn btn-primary btn-sm"
+              >Signup</a
+            >
+          </div>
+        </div>
+      </div>
+    </nav>
+    {% if messages %} {% for message in messages %}
+    <div id="message" class="container">
+      <div
+        class="alert alert-{{ message.tags }} alert-dismissible text-center"
+        role="alert"
+      >
+        <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <strong>
+          {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %} Error: {%
+          else %} {{ message.tags|title }} {% endif %}
+        </strong>
+        {{ message }}
+      </div>
+    </div>
+    {% endfor %} {% endif %}
+
+    <h1 class="text-center d-flex align-items-center justify-content-center bg-body-secondary" style="min-height: 60vh">Student Grade Prediction System</h1>
+    
+
+    <!-- Students -->
+    <div class="container mt-5 mb-5">
+      <h2 class="text-center mb-4">View Students</h2>
+      <table class="table border">
+        <thead>
+          <tr>
+            <th scope="col">S.N.</th>
+            <th scope="col">Name</th>
+            <th scope="col">Level</th>
+            <th scope="col">Courses</th>
+            <th scope="col">Age</th>
+            <th scope="col">Phone No</th>
+            <th scope="col">Year Joined</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for stud in students %}
+          <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ stud.name }}</td>
+            <td>{{ stud.level }}</td>
+            <td>
+              {% for course in stud.courses_set.all %}
+                <li>{{ course.name }}</li>
+              {% endfor %}
+            </td>
+            <td>{{ stud.age }}</td>
+            <td>{{ stud.phone_no }}</td>
+            <td>{{ stud.year_joined }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Testimonias -->
+    <div class="container mt-5 mb-5">
+      <h2 class="text-center mb-4">Testimonials</h2>
+      <div class="row">
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="card">
+            <div class="card-body">
+              Thanks to this system, I was able to identify my
+              strengths and weaknesses and improve my grades
+              significantly. It's a game-changer for students!
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="card">
+            <div class="card-body">
+              As an educator, I highly recommend this system to my
+              students. It offers valuable insights and helps them set
+              realistic academic goals
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="card">
+            <div class="card-body">
+              I appreciate how this system takes the guesswork out of
+              my academic planning. It's like having a personal
+              academic advisor
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="card">
+            <div class="card-body">
+              I used to spend hours analyzing my grades and planning
+              my studies. Now, this system does it all for me, leaving
+              me more time to focus on learning.
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="card">
+            <div class="card-body">
+              This system not only predicts my marks but also boosts
+              my confidence. I feel more in control of my academic
+              journey than ever before.
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="card">
+            <div class="card-body">
+              I've tried other prediction tools, but this one is by
+              far the most accurate and user-friendly. It's an
+              indispensable part of my study routine.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Teachers -->
+    <div class="container mt-5 mb-5">
+      <h2 class="text-center mb-4">View Teachers</h2>
+      <table class="table border">
+        <thead>
+          <tr>
+            <th scope="col">S.N.</th>
+            <th scope="col">Name</th>
+            <th scope="col">Courses</th>
+            <th scope="col">Age</th>
+            <th scope="col">Phone No</th>
+            <th scope="col">Year Joined</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tbody>
+            {% for teach in teachers %}
+            <tr>
+              <th scope="row">{{ forloop.counter }}</th>
+              <td>{{ teach.name }}</td>
+              <td>dw</td>
+              <td>{{ teach.age }}</td>
+              <td>{{ teach.phone_no }}</td>
+              <td>{{ teach.year_joined }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Accordion -->
+    <div class="container mb-5">
+      <h2 class="text-center mb-4">Frequently Asked Questions</h2>
+      <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseOne"
+              aria-expanded="true"
+              aria-controls="collapseOne"
+            >
+              How Our System Works
+            </button>
+          </h2>
+          <div
+            id="collapseOne"
+            class="accordion-collapse collapse show"
+            data-bs-parent="#accordionExample"
+          >
+            <div class="accordion-body">
+              This section can provide a step-by-step explanation of
+              how the system predicts student marks. It can include
+              details about data input, algorithms used, and the
+              accuracy of predictions. Explain how user data is
+              handled, stored, and secured within the system,
+              reassuring users about their data privacy.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseTwo"
+              aria-expanded="false"
+              aria-controls="collapseTwo"
+            >
+              Benefits of Using Our System
+            </button>
+          </h2>
+          <div
+            id="collapseTwo"
+            class="accordion-collapse collapse"
+            data-bs-parent="#accordionExample"
+          >
+            <div class="accordion-body">
+              Highlight the advantages of using the Student Marks
+              Prediction System, such as improved academic
+              performance, time savings, and data-driven
+              decision-making. Explain how user data is handled,
+              stored, and secured within the system, reassuring users
+              about their data privacy.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseThree"
+              aria-expanded="false"
+              aria-controls="collapseThree"
+            >
+              Privacy and Data Security
+            </button>
+          </h2>
+          <div
+            id="collapseThree"
+            class="accordion-collapse collapse"
+            data-bs-parent="#accordionExample"
+          >
+            <div class="accordion-body">
+              Explain how user data is handled, stored, and secured
+              within the system, reassuring users about their data
+              privacy. Explain how user data is handled, stored, and
+              secured within the system, reassuring users about their
+              data privacy.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- footer -->
+    <footer class="border p-4 text-center">
+      Copyright &copy; All rights reserved.
+    </footer>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
